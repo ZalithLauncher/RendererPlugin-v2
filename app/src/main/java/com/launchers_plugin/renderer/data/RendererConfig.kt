@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  * @param renderSuffix              渲染器后缀（请考虑硬编码每个渲染器的后缀）
  *                                  启动器将使用 `包名`+[renderSuffix] 构建该渲染器的唯一ID，用于标识渲染器
  * @param displayName               向用户展示的名称
- * @param rendererId                渲染器ID，启动器将会配置到环境变量`POJAV_RENDERER`
+ * @param rendererId                渲染器ID，启动器将会配置到环境变量`POJAV_RENDERER`，**不再需要塞进[env]里**
  * @param rendererGLPath            渲染器图形库具体路径
  * @param rendererEGLPath           渲染器EGL具体路径
  * @param dlopenLibPaths            需要 dlopen 的库的具体路径

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="push_to_launcher">推送到启动器</string>
+    <string name="push_not_found">未检查到受支持的启动器，请检查启动器更新！</string>
+</resources>
