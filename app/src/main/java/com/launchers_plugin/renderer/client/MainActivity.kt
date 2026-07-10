@@ -1,14 +1,17 @@
-package com.mio.plugin.renderer
+package com.launchers_plugin.renderer.client
 
 import android.app.Activity
 import android.os.Bundle
 import android.widget.TextView
+import com.launchers_plugin.renderer.R
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(TextView(this).apply {
-            text = "Plugin"
-        })
+        setContentView(
+            TextView(this).apply {
+                text = getString(R.string.app_name)
+            }
+        )
     }
 }

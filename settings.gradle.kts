@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "FCLRendererPlugin"
+rootProject.name = "RendererPlugin V2"
 include(":app")
  
