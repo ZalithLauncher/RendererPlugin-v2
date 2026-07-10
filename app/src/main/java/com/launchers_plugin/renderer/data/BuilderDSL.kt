@@ -25,7 +25,6 @@ interface RendererScope {
         env: Map<String, String> = emptyMap(),
         minMCVer: String? = null,
         maxMCVer: String? = null,
-        requestStoragePermission: Boolean = false,
     ): RendererConfig
 
     /**
@@ -53,7 +52,6 @@ private class RendererConfigListBuilder : RendererScope {
         env: Map<String, String>,
         minMCVer: String?,
         maxMCVer: String?,
-        requestStoragePermission: Boolean,
     ): RendererConfig {
         return RendererConfig(
             renderSuffix = renderSuffix,
@@ -65,7 +63,6 @@ private class RendererConfigListBuilder : RendererScope {
             env = env,
             minMCVer = minMCVer,
             maxMCVer = maxMCVer,
-            requestStoragePermission = requestStoragePermission,
         ).also(renderers::add)
     }
 

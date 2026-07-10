@@ -14,7 +14,6 @@ import kotlinx.serialization.Serializable
  * @param env                       渲染器环境变量列表
  * @param minMCVer                  最低支持的 Minecraft 版本号，如`1.17`，为`null`则不限制
  * @param maxMCVer                  最高支持的 Minecraft 版本号，如`1.17`，为`null`则不限制
- * @param requestStoragePermission  是否需要启动器具有所有目录读写权限（如果渲染器的配置文件在公共目录，启动器无权限则无法加载配置）
  */
 @Serializable
 data class RendererConfig(
@@ -36,6 +35,4 @@ data class RendererConfig(
     val minMCVer: String?,
     @SerialName("maxMCVer")
     val maxMCVer: String?,
-    @SerialName("requestStoragePermission")
-    val requestStoragePermission: Boolean = false,
 )
