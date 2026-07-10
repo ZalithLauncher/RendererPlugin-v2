@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="push_to_launcher">Push to launcher</string>
-    <string name="push_not_found">No supported launcher found. Please check for launcher updates!</string>
-</resources>

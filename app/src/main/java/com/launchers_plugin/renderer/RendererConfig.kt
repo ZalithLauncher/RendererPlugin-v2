@@ -1,11 +1,10 @@
 package com.launchers_plugin.renderer
 
-import android.app.Activity
 import com.launchers_plugin.renderer.data.RendererConfigList
 import com.launchers_plugin.renderer.data.buildConfigs
 
-fun Activity.buildRendererConfig(): RendererConfigList {
-    return buildConfigs {
+fun buildRendererConfig(nativeLibDir: String): RendererConfigList {
+    return buildConfigs(nativeLibDir) {
         val config0 = renderer(
             renderSuffix = "a",
             displayName = "XXX",

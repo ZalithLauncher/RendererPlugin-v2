@@ -1,10 +1,12 @@
 [versions]
 agp = "9.2.0"
+annotation = "1.5.0"
 kotlin = "2.4.0"
 ktor = "3.5.1"
 kspPlugin = "2.3.4"
 
 [libraries]
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 [plugins]

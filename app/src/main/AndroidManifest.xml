@@ -24,6 +24,11 @@
             android:name="fclPlugin_V2"
             android:value="true" />
 
+        <!--    启动器将通过加载dex反射调用的配置获取类    -->
+        <meta-data
+            android:name="config_class"
+            android:value="com.launchers_plugin.renderer.RendererConfigProvider" />
+
         <!--    兼容旧版渲染器插件架构    -->
         <meta-data
             android:name="des"
@@ -45,11 +50,5 @@
             android:value="${maxMCVer}" />
 
     </application>
-
-    <queries>
-        <intent>
-            <action android:name="com.launchers_plugin.renderer.PUSH_RENDERER_CONFIG" />
-        </intent>
-    </queries>
 
 </manifest>

@@ -98,5 +98,6 @@ kotlin {
 }
 
 dependencies {
+    implementation(libs.androidx.annotation)
     implementation(libs.ktor.serialization.kotlinx.json)
 }
