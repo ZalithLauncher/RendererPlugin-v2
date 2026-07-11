@@ -5,3 +5,8 @@ plugins {
     alias(libs.plugins.ksp.plugin) apply false
     kotlin("plugin.serialization") version libs.versions.kotlin apply false
 }
+
+val dslBuild = gradle.includedBuild("dsl")
+tasks.register("publishToMavenLocal") {
+    dependsOn(dslBuild.task(":publishToMavenLocal"))
+}
