@@ -64,17 +64,20 @@ android {
                         normal("LIB_MESA_NAME", nativePath("libXXX.so"))
 
                         // 可配置的环境变量
-                        editable("EEE", RendererConfig.EnvItems(
-                            defaultValue = "DDD", // 默认选择的环境变量（启动器默认将其视作可选项之一，不必添加到values）
-                            // 所有可选的环境变量配置项
-                            values = buildList {
-                                add("CCC")
-                                add("FFF")
-                            },
+                        editable(
+                            key = "EEE",
                             // 可选：该环境变量配置项的标题
                             // 在 AndroidManifest.xml 中增加 meta-data，指向本插件的本地化资源
-                            title = RendererConfig.MetaString("title_eee")
-                        ))
+                            title = RendererConfig.MetaString("title_eee"),
+                            items = RendererConfig.EnvItems(
+                                defaultValue = "DDD", // 默认选择的环境变量（启动器默认将其视作可选项之一，不必添加到values）
+                                // 所有可选的环境变量配置项
+                                values = buildList {
+                                    add("CCC")
+                                    add("FFF")
+                                }
+                            )
+                        )
                     },
                     minMCVer = "1.17",
                     maxMCVer = null,

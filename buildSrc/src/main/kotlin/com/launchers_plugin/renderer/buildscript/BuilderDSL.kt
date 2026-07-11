@@ -19,7 +19,11 @@ interface EnvConfigScope {
      * 创建一个可由启动器编辑的环境变量
      * @see Env.EditableEnv
      */
-    fun editable(key: String, items: RendererConfig.EnvItems)
+    fun editable(
+        key: String,
+        items: RendererConfig.EnvItems,
+        title: RendererConfig.MetaString? = null
+    )
 }
 
 private class EnvConfigBuilder: EnvConfigScope {
@@ -34,9 +38,10 @@ private class EnvConfigBuilder: EnvConfigScope {
 
     override fun editable(
         key: String,
-        items: RendererConfig.EnvItems
+        items: RendererConfig.EnvItems,
+        title: RendererConfig.MetaString?
     ){
-        envs.add(Env.EditableEnv(key, items))
+        envs.add(Env.EditableEnv(key, title, items))
     }
 
     fun build(): List<Env> = envs.toList()

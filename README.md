@@ -80,19 +80,22 @@ nativePath("libXXX.so") // 返回 "**|libXXX.so"
 normal("LIB_MESA_NAME", nativePath("libMesa.so"))
 ```
 
-#### `editable(key, items)`
+#### `editable(key, title?, items)`
 
 可配置环境变量，启动器会根据插件提供的选项，提供配置入口
 
 ```kotlin
-editable("GL_VERSION", RendererConfig.EnvItems(
-    defaultValue = "4.6",       // 默认值，且会被视为列表的其中一项，不必重复添加到 values 中
-    values = buildList {        // 所有可选项
-        add("4.5")
-        add("3.3")
-    },
-    title = RendererConfig.MetaString("title_gl_version") // 可选：标题资源索引
-))
+editable(
+    key = "GL_VERSION",
+    title = RendererConfig.MetaString("title_gl_version"), // 可选：标题资源索引
+    items = RendererConfig.EnvItems(
+        defaultValue = "4.6",       // 默认值，且会被视为列表的其中一项，不必重复添加到 values 中
+        values = buildList {        // 所有可选项
+            add("4.5")
+            add("3.3")
+        }
+    )
+)
 ```
 
 `title` 用于在 [AndroidManifest.xml](./app/src/main/AndroidManifest.xml) 中关联插件本地化字符串资源，需要额外声明 meta-data：

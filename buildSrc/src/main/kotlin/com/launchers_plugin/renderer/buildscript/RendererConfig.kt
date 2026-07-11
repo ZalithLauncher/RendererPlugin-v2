@@ -49,6 +49,7 @@ data class RendererConfig(
         /**
          * 可由启动器进行配置的环境变量
          * @see EnvItems
+         * @param title 该配置项的标题（meta-data 索引）
          * @param values 该环境变量的配置项
          */
         @Serializable
@@ -56,6 +57,8 @@ data class RendererConfig(
         data class EditableEnv(
             @SerialName("key")
             val key: String,
+            @SerialName("title")
+            val title: MetaString? = null,
             @SerialName("values")
             val values: EnvItems
         ): Env
@@ -65,7 +68,6 @@ data class RendererConfig(
      * 环境变量配置项，启动器将根据这些项
      * @param defaultValue 默认环境变量
      * @param values 可选环境变量
-     * @param title 该配置项的标题（meta-data 索引）
      */
     @Serializable
     data class EnvItems(
@@ -73,8 +75,6 @@ data class RendererConfig(
         val defaultValue: String,
         @SerialName("values")
         val values: List<String>,
-        @SerialName("title")
-        val title: MetaString? = null,
     )
 
     /**
