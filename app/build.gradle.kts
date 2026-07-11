@@ -1,6 +1,7 @@
 import com.launchers_plugin.renderer.buildscript.RendererConfig
 import com.launchers_plugin.renderer.buildscript.buildEnvs
 import com.launchers_plugin.renderer.buildscript.buildJsonValue
+import com.launchers_plugin.renderer.buildscript.legacyManifest
 import com.launchers_plugin.renderer.buildscript.nativePath
 import com.launchers_plugin.renderer.buildscript.renderer
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -86,46 +87,36 @@ android {
 
 
             // 兼容旧版渲染器插件架构
+            manifestPlaceholders.putAll(legacyManifest {
+                // 渲染器在启动器内显示的名称
+                displayName     = "MobileGL Espryt"
+                // 渲染器的具体定义
+                // 旧版格式为        名称:渲染器库名:EGL库名
+                // 此处方便配置拆解为  rendererName:rendererLib:eglLib
+                rendererName    = "MobileGL Espryt"
+                rendererLib     = "libMobileGL.so"
+                eglLib          = "/libMobileGL.so"
+                // 最小支持的MC版本
+                minMCVer        = ""
+                // 最大支持的MC版本
+                maxMCVer        = ""
 
-            //渲染器在启动器内显示的名称
-            //The name displayed by the renderer in the launcher
-            manifestPlaceholders["des"] = ""
-            //渲染器的具体定义 格式为 名称:渲染器库名:EGL库名 例如 LTW:libltw.so:libltw.so
-            //The specific definition format of a renderer is ${name}:${renderer library name}:${EGL library name}, for example:   LTW:libltw.so:libltw.so
-            manifestPlaceholders["renderer"] = ""
-
-            //特殊Env
-            //Special Env
-            //DLOPEN=libxxx.so 用于加载额外库文件
-            //DLOPEN=libxxx.so used to load external library
-            //如果有多个库,可以使用","隔开,例如  DLOPEN=libxxx.so,libyyy.so
-            //If there are multiple libraries, you can use "," to separate them, for example  DLOPEN=libxxx.so,libyyy.so
-            manifestPlaceholders["boatEnv"] = mutableMapOf<String,String>().apply {
-
-            }.run {
-                var env = ""
-                forEach { (key, value) ->
-                    env += "$key=$value:"
+                // 特殊Env
+                // Special Env
+                // DLOPEN=libxxx.so 用于加载额外库文件
+                // DLOPEN=libxxx.so used to load external library
+                // 如果有多个库,可以使用","隔开,例如  DLOPEN=libxxx.so,libyyy.so
+                boatEnv {
+                    put("LIBGL_ES", "3")
+                    put("POJAV_RENDERER", "opengles3")
+                    put("MOBILEGL_BACKEND_TYPE", "DirectGLES")
                 }
-                env.dropLast(1)
-            }
-
-            manifestPlaceholders["pojavEnv"] = mutableMapOf<String,String>().apply {
-
-            }.run {
-                var env = ""
-                forEach { (key, value) ->
-                    env += "$key=$value:"
+                pojavEnv {
+                    put("LIBGL_ES", "3")
+                    put("POJAV_RENDERER", "opengles3")
+                    put("MOBILEGL_BACKEND_TYPE", "DirectGLES")
                 }
-                env.dropLast(1)
-            }
-
-            //最小支持的MC版本
-            //The minimum supported MC version
-            manifestPlaceholders["minMCVer"] = ""
-            //最大支持的MC版本
-            //The maximum supported MC version
-            manifestPlaceholders["maxMCVer"] = ""
+            })
         }
     }
 
