@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_eee">EEE</string>
+    <string name="title_backend_type">Configure the rendering backend.</string>
 </resources>

@@ -50,37 +50,30 @@ android {
             //新架构的渲染器配置
             resValue("string", "config", buildJsonValue {
                 renderer(
-                    displayName = "XXX",
-                    rendererId = "XXX",
-                    rendererGLPath = nativePath("libXXX.so"),
-                    rendererEGLPath = nativePath("libXXX.so"),
-                    dlopenLibPaths = buildList {
-                        // 提供完整的路径
-                        add(nativePath("libXXX.so"))
-                    },
+                    displayName = "MobileGL Espryt",
+                    rendererId = "opengles3",
+                    rendererGLPath = "libMobileGL.so",
+                    rendererEGLPath = nativePath("libMobileGL.so"),
+                    dlopenLibPaths = emptyList(), // 如需 dlopen，请尽量使用 nativePath 拼接库的绝对路径
                     env = buildEnvs {
-                        normal("XXX", "AAA")
-                        // 部分需要使用到完整路径的配置，如 LIB_MESA_NAME
-                        // 提供完整的路径
-                        normal("LIB_MESA_NAME", nativePath("libXXX.so"))
+                        normal("LIBGL_ES", "3")
 
                         // 可配置的环境变量
                         editable(
-                            key = "EEE",
+                            key = "MOBILEGL_BACKEND_TYPE",
                             // 可选：该环境变量配置项的标题
                             // 在 AndroidManifest.xml 中增加 meta-data，指向本插件的本地化资源
-                            title = RendererConfig.MetaString("title_eee"),
+                            title = RendererConfig.MetaString("title_backend_type"),
                             items = RendererConfig.EnvItems(
-                                defaultValue = "DDD", // 默认选择的环境变量（启动器默认将其视作可选项之一，不必添加到values）
+                                defaultValue = "DirectGLES", // 默认选择的环境变量（启动器默认将其视作可选项之一，不必添加到values）
                                 // 所有可选的环境变量配置项
                                 values = buildList {
-                                    add("CCC")
-                                    add("FFF")
+                                    add("DirectVulkan")
                                 }
                             )
                         )
                     },
-                    minMCVer = "1.17",
+                    minMCVer = null, // Minecraft 版本号，如 "1.17"
                     maxMCVer = null,
                 )
             })
@@ -102,9 +95,7 @@ android {
                 maxMCVer        = ""
 
                 // 特殊Env
-                // Special Env
                 // DLOPEN=libxxx.so 用于加载额外库文件
-                // DLOPEN=libxxx.so used to load external library
                 // 如果有多个库,可以使用","隔开,例如  DLOPEN=libxxx.so,libyyy.so
                 boatEnv {
                     put("LIBGL_ES", "3")

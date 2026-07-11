@@ -25,8 +25,8 @@
             android:resource="@string/config" />
 
         <meta-data
-            android:name="title_eee"
-            android:resource="@string/title_eee" />
+            android:name="title_backend_type"
+            android:resource="@string/title_backend_type" />
 
         <!--    兼容旧版渲染器插件架构    -->
         <meta-data
