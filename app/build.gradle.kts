@@ -1,3 +1,8 @@
+import com.launchers_plugin.renderer.buildscript.RendererConfig
+import com.launchers_plugin.renderer.buildscript.buildEnvs
+import com.launchers_plugin.renderer.buildscript.buildJsonValue
+import com.launchers_plugin.renderer.buildscript.nativePath
+import com.launchers_plugin.renderer.buildscript.renderer
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -40,6 +45,42 @@ android {
             //包名后缀
             //package name Suffix
             applicationIdSuffix = ".xxx"
+
+            //新架构的渲染器配置
+            resValue("string", "config", buildJsonValue {
+                renderer(
+                    displayName = "XXX",
+                    rendererId = "XXX",
+                    rendererGLPath = nativePath("libXXX.so"),
+                    rendererEGLPath = nativePath("libXXX.so"),
+                    dlopenLibPaths = buildList {
+                        // 提供完整的路径
+                        add(nativePath("libXXX.so"))
+                    },
+                    env = buildEnvs {
+                        normal("XXX", "AAA")
+                        // 部分需要使用到完整路径的配置，如 LIB_MESA_NAME
+                        // 提供完整的路径
+                        normal("LIB_MESA_NAME", nativePath("libXXX.so"))
+
+                        // 可配置的环境变量
+                        editable("EEE", RendererConfig.EnvItems(
+                            defaultValue = "DDD", // 默认选择的环境变量（启动器默认将其视作可选项之一，不必添加到values）
+                            // 所有可选的环境变量配置项
+                            values = buildList {
+                                add("CCC")
+                                add("FFF")
+                            },
+                            // 可选：该环境变量配置项的标题
+                            // 在 AndroidManifest.xml 中增加 meta-data，指向本插件的本地化资源
+                            title = RendererConfig.MetaString("title_eee")
+                        ))
+                    },
+                    minMCVer = "1.17",
+                    maxMCVer = null,
+                )
+            })
+
 
             // 兼容旧版渲染器插件架构
 
@@ -99,5 +140,4 @@ kotlin {
 
 dependencies {
     implementation(libs.androidx.annotation)
-    implementation(libs.ktor.serialization.kotlinx.json)
 }

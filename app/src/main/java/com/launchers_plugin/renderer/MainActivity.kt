@@ -1,9 +1,8 @@
-package com.launchers_plugin.renderer.client
+package com.launchers_plugin.renderer
 
 import android.app.Activity
 import android.os.Bundle
 import android.widget.TextView
-import com.launchers_plugin.renderer.R
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -8,26 +8,11 @@
         android:supportsRtl="true">
 
         <activity
-            android:name=".client.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <!--  由启动器后台静默启动，读取配置后广播返回  -->
-        <activity
-            android:name=".client.ConfigProviderActivity"
-            android:theme="@style/Theme.Transparent"
-            android:exported="true"
-            android:excludeFromRecents="true"
-            android:noHistory="true"
-            android:taskAffinity=""
-            android:finishOnTaskLaunch="true">
-            <intent-filter>
-                <action android:name="com.launchers_plugin.renderer.REQUEST_CONFIG" />
-                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -37,7 +22,11 @@
 
         <meta-data
             android:name="fclPlugin_V2"
-            android:value="true" />
+            android:resource="@string/config" />
+
+        <meta-data
+            android:name="title_eee"
+            android:resource="@string/title_eee" />
 
         <!--    兼容旧版渲染器插件架构    -->
         <meta-data

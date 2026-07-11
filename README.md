@@ -1,34 +1,104 @@
-# Renderer Plugin V2 模板
-安卓端 Minecraft Java 版启动器的渲染器插件模板  
+# RendererPlugin V2
 
-旧架构依赖 `meta-data` 硬编码配置，还需启动器拥有文件访问权限，以加载额外配置  
-新架构支持**动态生成**配置，甚至可以将插件本身作为渲染器配置器，开发 UI 让用户自行编辑各项设置  
-现在同一插件可提供多个**不同的渲染器条目**  
-
-启动器扫描到插件后，会启动其 `ConfigProviderActivity`（透明 Activity）。  
-该 Activity 在插件自身进程中运行，拥有完整权限，读取配置后通过广播回传给启动器，随即 `finish()`。
+安卓端 Minecraft Java 版启动器的**渲染器插件**模板  
+本模板提供了一套 Kotlin DSL，用于在构建阶段将渲染器配置序列化为 JSON 并写入应用字符串资源  
+启动器通过读取 `AndroidManifest.xml` 中的 `meta-data` 来识别插件并加载渲染器库  
 
 ## 使用模板
 
-### 配置 [build.gradle.kts](./app/build.gradle.kts)
-- 自定义 `applicationId`、应用名称（`app_name`）、后缀（`applicationIdSuffix`）
-- 可选：配置 `manifestPlaceholders` 兼容旧版渲染器架构
+在 [AndroidManifest.xml](./app/src/main/AndroidManifest.xml) 中添加插件标记
 
-> 启动器支持新架构时，不会使用旧版架构
+```xml
+<!-- 引用新架构渲染器配置 -->
+<meta-data
+    android:name="fclPlugin_V2"
+    android:resource="@string/config" />
 
-### 配置 [AndroidManifest.xml](./app/src/main/AndroidManifest.xml)
-- 声明 `fclPlugin_V2` meta-data，否则启动器不会识别新架构的插件
-- 如需兼容旧版架构，需要额外声明 `fclPlugin` meta-data
+<!-- 可选：兼容旧版插件架构 -->
+<!-- 如插件支持新架构，启动器不会同时加载旧版本配置 -->
+<meta-data
+    android:name="fclPlugin"
+    android:value="true" />
+```
 
-### 编写配置
+启用 `resValues`，否则配置字符串无法正常写入
 
-参考模板：[RendererConfig.kt](./app/src/main/java/com/launchers_plugin/renderer/RendererConfig.kt)
 ```kotlin
-fun buildRendererConfig(context: Context): RendererConfigList {
-    return buildConfigs(context) {
-        renderer(
-            //...
-        )
+android {
+    buildFeatures {
+        resValues = true
     }
 }
+```
+
+放置渲染器库  
+将编译好的 `.so` 文件放入 `app/src/main/jniLibs/` 对应的 ABI 目录：
+
+``` txt
+app/src/main/jniLibs/
+├── arm64-v8a/
+│   └── libxxx.so
+├── armeabi-v7a/
+│   └── libxxx.so
+├── x86/
+│   └── libxxx.so
+└── x86_64/
+    └── libxxx.so
+```
+
+## DSL API 参考
+
+### `renderer(...)`
+
+
+| 参数                | 类型             | 说明                                   |
+|-------------------|----------------|--------------------------------------|
+| `displayName`     | `String`       | 在启动器中显示的渲染器名称                        |
+| `rendererId`      | `String`       | 渲染器 ID，启动器将其配置到环境变量 `POJAV_RENDERER` |
+| `rendererGLPath`  | `String`       | 渲染器库路径，使用 `nativePath()` 构建          |
+| `rendererEGLPath` | `String`       | 渲染器 EGL 库路径，使用 `nativePath()` 构建     |
+| `dlopenLibPaths`  | `List<String>` | 需要额外 dlopen 的库路径列表                   |
+| `env`             | `List<Env>`    | 环境变量列表，使用 `buildEnvs()` 构建           |
+| `minMCVer`        | `String?`      | 最低支持的 MC 版本号（如 `"1.17"`），`null` 不限制  |
+| `maxMCVer`        | `String?`      | 最高支持的 MC 版本号，`null` 不限制              |
+
+### `nativePath(string)`
+
+```kotlin
+nativePath("libXXX.so") // 返回 "**|libXXX.so"
+```
+
+将 `**|` 前缀拼接到库文件名前，启动器识别到此前缀后，会替换为插件实际的 `nativeLibraryDir` 路径
+
+### `buildEnvs {}`
+
+#### `normal(key, value)` 
+
+固定环境变量，不可配置
+
+```kotlin
+normal("LIB_MESA_NAME", nativePath("libMesa.so"))
+```
+
+#### `editable(key, items)`
+
+可配置环境变量，启动器会根据插件提供的选项，提供配置入口
+
+```kotlin
+editable("GL_VERSION", RendererConfig.EnvItems(
+    defaultValue = "4.6",       // 默认值，且会被视为列表的其中一项，不必重复添加到 values 中
+    values = buildList {        // 所有可选项
+        add("4.5")
+        add("3.3")
+    },
+    title = RendererConfig.MetaString("title_gl_version") // 可选：标题资源索引
+))
+```
+
+`title` 用于在 [AndroidManifest.xml](./app/src/main/AndroidManifest.xml) 中关联插件本地化字符串资源，需要额外声明 meta-data：
+
+```xml
+<meta-data
+    android:name="title_gl_version"
+    android:resource="@string/title_gl_version" />
 ```
