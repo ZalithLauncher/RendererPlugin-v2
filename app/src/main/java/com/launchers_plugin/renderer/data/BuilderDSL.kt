@@ -1,5 +1,6 @@
 package com.launchers_plugin.renderer.data
 
+import android.content.Context
 import java.io.File
 
 @DslMarker
@@ -39,7 +40,7 @@ interface RendererScope {
 }
 
 private class RendererConfigListBuilder(
-    private val nativeLibDir: String
+    private val context: Context
 ) : RendererScope {
     private val renderers = mutableListOf<RendererConfig>()
 
@@ -72,7 +73,7 @@ private class RendererConfigListBuilder(
     }
 
     override fun nativePath(libFileName: String): String {
-        return File(nativeLibDir, libFileName).absolutePath
+        return File(context.applicationInfo.nativeLibraryDir, libFileName).absolutePath
     }
 
     fun build(): List<RendererConfig> = renderers.toList()
@@ -80,13 +81,12 @@ private class RendererConfigListBuilder(
 
 /**
  * 构建渲染器配置
- * @param nativeLibDir 插件 APK 的 native 库目录路径
  */
 fun buildConfigs(
-    nativeLibDir: String,
+    context: Context,
     block: RendererScope.() -> Unit
 ): RendererConfigList {
-    val builder = RendererConfigListBuilder(nativeLibDir)
+    val builder = RendererConfigListBuilder(context)
     builder.block()
     return RendererConfigList(builder.build())
 }

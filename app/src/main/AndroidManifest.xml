@@ -16,6 +16,21 @@
             </intent-filter>
         </activity>
 
+        <!--  由启动器后台静默启动，读取配置后广播返回  -->
+        <activity
+            android:name=".client.ConfigProviderActivity"
+            android:theme="@style/Theme.Transparent"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:finishOnTaskLaunch="true">
+            <intent-filter>
+                <action android:name="com.launchers_plugin.renderer.REQUEST_CONFIG" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <meta-data
             android:name="fclPlugin"
             android:value="true" />
@@ -23,11 +38,6 @@
         <meta-data
             android:name="fclPlugin_V2"
             android:value="true" />
-
-        <!--    启动器将通过加载dex反射调用的配置获取类    -->
-        <meta-data
-            android:name="config_class"
-            android:value="com.launchers_plugin.renderer.RendererConfigProvider" />
 
         <!--    兼容旧版渲染器插件架构    -->
         <meta-data
