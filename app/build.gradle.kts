@@ -7,6 +7,7 @@ import com.launchers_plugin.renderer.buildscript.renderer
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
+    id("com.launchers_plugin.renderer.dsl")
     alias(libs.plugins.android.application)
     id("com.google.devtools.ksp")
     id("kotlinx-serialization")

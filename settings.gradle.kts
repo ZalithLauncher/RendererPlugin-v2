@@ -23,4 +23,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "RendererPlugin V2"
 include(":app")
- 
+includeBuild("dsl")

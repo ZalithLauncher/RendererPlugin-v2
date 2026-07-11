@@ -82,6 +82,8 @@ fun nativePath(libFileName: String): String {
 
 /**
  * 构建环境变量集合
+ * @see Env.NormalEnv
+ * @see Env.EditableEnv
  */
 fun buildEnvs(
     block: EnvConfigScope.() -> Unit
