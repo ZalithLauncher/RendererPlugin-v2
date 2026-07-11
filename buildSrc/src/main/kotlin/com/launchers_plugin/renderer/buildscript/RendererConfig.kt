@@ -38,6 +38,7 @@ data class RendererConfig(
          * 普通的环境变量，这是不可配置的，固定存在的环境变量
          */
         @Serializable
+        @SerialName("NormalEnv")
         data class NormalEnv(
             @SerialName("key")
             val key: String,
@@ -51,6 +52,7 @@ data class RendererConfig(
          * @param values 该环境变量的配置项
          */
         @Serializable
+        @SerialName("EditableEnv")
         data class EditableEnv(
             @SerialName("key")
             val key: String,
