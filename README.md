@@ -46,47 +46,6 @@ app/src/main/jniLibs/
     └── libxxx.so
 ```
 
-## 作为独立插件使用
-
-如果已有自己的项目，只需引用 DSL 插件即可使用相同的配置 DSL，无需 fork 本模板。
-
-### 添加 JitPack 仓库
-
-在根 `settings.gradle.kts` 中：
-
-```kotlin
-pluginManagement {
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-        maven("https://jitpack.io")
-    }
-}
-```
-
-### 应用插件
-
-在模块的 `build.gradle.kts` 中：
-
-```kotlin
-plugins {
-    id("com.launchers_plugin.renderer.dsl") version "RELEASE_TAG"
-    // 你的其他插件...
-}
-```
-
-`RELEASE_TAG` 替换为实际的 Git tag（如 `1.0.0`）。
-
-应用插件后，以下 DSL 函数即可直接使用：
-
-| 函数 | 说明 |
-|------|------|
-| `renderer { }` | 构建 V2 渲染器配置 |
-| `buildJsonValue { }` | 将配置序列化为 JSON 字符串 |
-| `buildEnvs { }` | 构建环境变量集合 |
-| `nativePath()` | 拼接 `nativeLibraryDir` 路径 |
-| `legacyManifest { }` | 构建旧版 manifest placeholders |
-
 ## DSL API 参考
 
 ### `renderer(...)`
@@ -145,4 +104,31 @@ editable(
 <meta-data
     android:name="title_gl_version"
     android:resource="@string/title_gl_version" />
+```
+
+## DSL 插件
+
+如果已有自己的项目，只需引用 DSL 插件即可使用相同的配置 DSL
+
+### settings.gradle.kts
+```kotlin
+pluginManagement {
+    repositories {
+        maven("https://jitpack.io")
+        // ...
+    }
+}
+```
+
+### build.gradle.kts
+```kotlin
+buildscript {
+    dependencies {
+        classpath("com.github.ZalithLauncher.RendererPlugin-v2:dsl:1.0-alpha3")
+    }
+}
+
+plugins {
+    // ...
+}
 ```
