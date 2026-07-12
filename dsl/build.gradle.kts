@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.launchers_plugin.renderer"
-version = "1.0-alpha5"
+version = "1.0-alpha6"
 
 java {
     withSourcesJar()

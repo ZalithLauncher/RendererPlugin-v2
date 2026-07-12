@@ -59,7 +59,7 @@ data class RendererConfig(
             val key: String,
             @SerialName("title")
             val title: MetaString? = null,
-            @SerialName("values")
+            @SerialName("items")
             val items: EnvItems
         ): Env
 
