@@ -80,12 +80,12 @@ nativePath("libXXX.so") // 返回 "**|libXXX.so"
 normal("LIB_MESA_NAME", nativePath("libMesa.so"))
 ```
 
-#### `editable(key, title?, items)`
+#### `selectable(key, items, title?)`
 
-可配置环境变量，启动器会根据插件提供的选项，提供配置入口
+可根据预设值自由选择值的环境变量，启动器会根据插件提供的选项，提供配置入口
 
 ```kotlin
-editable(
+selectable(
     key = "GL_VERSION",
     title = RendererConfig.MetaString("title_gl_version"), // 可选：标题资源索引
     items = RendererConfig.EnvItems(
@@ -104,6 +104,32 @@ editable(
 <meta-data
     android:name="title_gl_version"
     android:resource="@string/title_gl_version" />
+```
+
+#### `customizable(key, defaultValue?, title?)`
+
+可由用户自行编辑值的环境变量，启动器将提供一个输入框，自定义该环境变量的值  
+该值为 null 或留空时，启动器不使用该环境变量
+
+```kotlin
+customizable(
+    key = "GL_VERSION",
+    title = RendererConfig.MetaString("title_gl_version"), // 可选，见上
+    defaultValue = "4.6"
+)
+```
+
+### `toggleable(key, value, toggle, title?)`
+
+可开关的环境变量，启动器将提供一个开关，决定是否使用该环境变量
+
+```kotlin
+toggleable(
+    key = "CUSTOM_ENV",
+    value = "VALUE",
+    toggle = false, // 默认为 true
+    title = RendererConfig.MetaString("title_custom_env") // 可选，见上
+)
 ```
 
 ## DSL 插件

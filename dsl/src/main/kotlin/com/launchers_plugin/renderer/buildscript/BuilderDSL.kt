@@ -16,12 +16,33 @@ interface EnvConfigScope {
     fun normal(key: String, value: String)
 
     /**
-     * 创建一个可由启动器编辑的环境变量
-     * @see Env.EditableEnv
+     * 创建一个根据预设值自由选择值的环境变量
+     * @see Env.SelectableEnv
      */
-    fun editable(
+    fun selectable(
         key: String,
         items: RendererConfig.EnvItems,
+        title: RendererConfig.MetaString? = null
+    )
+
+    /**
+     * 创建一个可由用户自行编辑值的环境变量
+     * @see Env.CustomizableEnv
+     */
+    fun customizable(
+        key: String,
+        defaultValue: String? = null,
+        title: RendererConfig.MetaString? = null
+    )
+
+    /**
+     * 创建一个可开关的环境变量（使用/不使用）
+     * @see Env.ToggleableEnv
+     */
+    fun toggleable(
+        key: String,
+        value: String,
+        toggle: Boolean = true,
         title: RendererConfig.MetaString? = null
     )
 }
@@ -36,12 +57,29 @@ private class EnvConfigBuilder: EnvConfigScope {
         envs.add(Env.NormalEnv(key, value))
     }
 
-    override fun editable(
+    override fun selectable(
         key: String,
         items: RendererConfig.EnvItems,
         title: RendererConfig.MetaString?
-    ){
-        envs.add(Env.EditableEnv(key, title, items))
+    ) {
+        envs.add(Env.SelectableEnv(key, title, items))
+    }
+
+    override fun customizable(
+        key: String,
+        defaultValue: String?,
+        title: RendererConfig.MetaString?
+    ) {
+        envs.add(Env.CustomizableEnv(key, title, defaultValue))
+    }
+
+    override fun toggleable(
+        key: String,
+        value: String,
+        toggle: Boolean,
+        title: RendererConfig.MetaString?
+    ) {
+        envs.add(Env.ToggleableEnv(key, value, title, toggle))
     }
 
     fun build(): List<Env> = envs.toList()
@@ -83,7 +121,7 @@ fun nativePath(libFileName: String): String {
 /**
  * 构建环境变量集合
  * @see Env.NormalEnv
- * @see Env.EditableEnv
+ * @see Env.SelectableEnv
  */
 fun buildEnvs(
     block: EnvConfigScope.() -> Unit

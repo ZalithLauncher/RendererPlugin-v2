@@ -47,20 +47,52 @@ data class RendererConfig(
         ): Env
 
         /**
-         * 可由启动器进行配置的环境变量
+         * 可根据预设值自由选择值的环境变量
          * @see EnvItems
          * @param title 该配置项的标题（meta-data 索引）
-         * @param values 该环境变量的配置项
+         * @param items 该环境变量的配置项
          */
         @Serializable
         @SerialName("EditableEnv")
-        data class EditableEnv(
+        data class SelectableEnv(
             @SerialName("key")
             val key: String,
             @SerialName("title")
             val title: MetaString? = null,
             @SerialName("values")
-            val values: EnvItems
+            val items: EnvItems
+        ): Env
+
+        /**
+         * 可由用户自行编辑值的环境变量
+         * @param title 该配置项的标题（meta-data 索引）
+         * @param defaultValue 默认值，留空或 null 时，启动器不会使用该环境变量
+         */
+        @Serializable
+        data class CustomizableEnv(
+            @SerialName("key")
+            val key: String,
+            @SerialName("title")
+            val title: MetaString? = null,
+            @SerialName("defaultValue")
+            val defaultValue: String? = null,
+        ): Env
+
+        /**
+         * 可开关的环境变量（使用/不使用）
+         * @param title 该配置项的标题（meta-data 索引）
+         * @param toggle 决定启动器是否使用该环境变量
+         */
+        @Serializable
+        data class ToggleableEnv(
+            @SerialName("key")
+            val key: String,
+            @SerialName("value")
+            val value: String,
+            @SerialName("title")
+            val title: MetaString? = null,
+            @SerialName("toggle")
+            val toggle: Boolean = true,
         ): Env
     }
 

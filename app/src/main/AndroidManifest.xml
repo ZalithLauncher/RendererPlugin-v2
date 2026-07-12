@@ -17,10 +17,6 @@
         </activity>
 
         <meta-data
-            android:name="fclPlugin"
-            android:value="true" />
-
-        <meta-data
             android:name="fclPlugin_V2"
             android:resource="@string/config" />
 
@@ -29,6 +25,10 @@
             android:resource="@string/title_backend_type" />
 
         <!--    兼容旧版渲染器插件架构    -->
+        <meta-data
+            android:name="fclPlugin"
+            android:value="true" />
+
         <meta-data
             android:name="des"
             android:value="${des}" />

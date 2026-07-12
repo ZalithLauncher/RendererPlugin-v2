@@ -60,7 +60,8 @@ android {
                         normal("LIBGL_ES", "3")
 
                         // 可配置的环境变量
-                        editable(
+                        // 根据预设值自由选择值的环境变量
+                        selectable(
                             key = "MOBILEGL_BACKEND_TYPE",
                             // 可选：该环境变量配置项的标题
                             // 在 AndroidManifest.xml 中增加 meta-data，指向本插件的本地化资源
