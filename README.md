@@ -82,7 +82,8 @@ normal("LIB_MESA_NAME", nativePath("libMesa.so"))
 
 #### `selectable(key, items, title?)`
 
-可根据预设值自由选择值的环境变量，启动器会根据插件提供的选项，提供配置入口
+可根据预设值自由选择值的环境变量，启动器会根据插件提供的选项，提供配置入口  
+**该环境变量的值不支持拼接 nativeLibraryDir 路径**
 
 ```kotlin
 selectable(
@@ -109,7 +110,8 @@ selectable(
 #### `customizable(key, defaultValue?, title?)`
 
 可由用户自行编辑值的环境变量，启动器将提供一个输入框，自定义该环境变量的值  
-该值为 null 或留空时，启动器不使用该环境变量
+该值为 null 或留空时，启动器不使用该环境变量  
+**该环境变量的值不支持拼接 nativeLibraryDir 路径**
 
 ```kotlin
 customizable(
