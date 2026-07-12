@@ -152,7 +152,7 @@ pluginManagement {
 ```kotlin
 buildscript {
     dependencies {
-        classpath("com.github.ZalithLauncher.RendererPlugin-v2:dsl:1.0-alpha4")
+        classpath("com.github.ZalithLauncher.RendererPlugin-v2:dsl:1.0-alpha5")
     }
 }
 

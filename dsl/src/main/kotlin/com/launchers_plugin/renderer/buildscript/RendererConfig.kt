@@ -53,7 +53,7 @@ data class RendererConfig(
          * @param items 该环境变量的配置项
          */
         @Serializable
-        @SerialName("EditableEnv")
+        @SerialName("SelectableEnv")
         data class SelectableEnv(
             @SerialName("key")
             val key: String,
@@ -69,6 +69,7 @@ data class RendererConfig(
          * @param defaultValue 默认值，留空或 null 时，启动器不会使用该环境变量
          */
         @Serializable
+        @SerialName("CustomizableEnv")
         data class CustomizableEnv(
             @SerialName("key")
             val key: String,
@@ -84,6 +85,7 @@ data class RendererConfig(
          * @param toggle 决定启动器是否使用该环境变量
          */
         @Serializable
+        @SerialName("ToggleableEnv")
         data class ToggleableEnv(
             @SerialName("key")
             val key: String,
