@@ -22,6 +22,7 @@ interface EnvConfigScope {
     fun selectable(
         key: String,
         items: RendererConfig.EnvItems,
+        check: Boolean? = null,
         title: RendererConfig.MetaString? = null
     )
 
@@ -60,9 +61,10 @@ private class EnvConfigBuilder: EnvConfigScope {
     override fun selectable(
         key: String,
         items: RendererConfig.EnvItems,
+        check: Boolean?,
         title: RendererConfig.MetaString?
     ) {
-        envs.add(Env.SelectableEnv(key, title, items))
+        envs.add(Env.SelectableEnv(key, title, check, items))
     }
 
     override fun customizable(
