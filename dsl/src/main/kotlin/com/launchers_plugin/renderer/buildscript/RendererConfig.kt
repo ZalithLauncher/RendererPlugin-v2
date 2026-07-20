@@ -64,7 +64,7 @@ data class RendererConfig(
             @SerialName("title")
             val title: MetaString? = null,
             @SerialName("check")
-            val check: Boolean? = null,
+            val check: Boolean? = true,
             @SerialName("items")
             val items: EnvItems
         ): Env

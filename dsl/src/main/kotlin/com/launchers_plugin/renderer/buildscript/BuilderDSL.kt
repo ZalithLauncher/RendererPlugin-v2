@@ -22,7 +22,7 @@ interface EnvConfigScope {
     fun selectable(
         key: String,
         items: RendererConfig.EnvItems,
-        check: Boolean? = null,
+        check: Boolean? = true,
         title: RendererConfig.MetaString? = null
     )
 
