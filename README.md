@@ -80,7 +80,7 @@ nativePath("libXXX.so") // 返回 "**|libXXX.so"
 normal("LIB_MESA_NAME", nativePath("libMesa.so"))
 ```
 
-#### `selectable(key, items, title?)`
+#### `selectable(key, items, check?, title?)`
 
 可根据预设值自由选择值的环境变量，启动器会根据插件提供的选项，提供配置入口  
 **该环境变量的值不支持拼接 nativeLibraryDir 路径**
@@ -89,6 +89,7 @@ normal("LIB_MESA_NAME", nativePath("libMesa.so"))
 selectable(
     key = "GL_VERSION",
     title = RendererConfig.MetaString("title_gl_version"), // 可选：标题资源索引
+    check = true, // 可选：给是否启用该环境变量的按钮提供一个默认值（true：默认启用，false：默认禁用，null：不显示按钮，始终启用）
     items = RendererConfig.EnvItems(
         defaultValue = "4.6",       // 默认值，且会被视为列表的其中一项，不必重复添加到 values 中
         values = buildList {        // 所有可选项
